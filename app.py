@@ -3,20 +3,24 @@ import pymysql
 
 app = Flask(__name__)
 
-
-class Database:
+class Database(object):
     def __init__(self):
         host = "127.0.0.1"
         user = "test"
         password = "password"
         db = "employees"
 
-        self.con = pymysql.connect(host=host, user=user, password=password, db=db, cursorclass=pymysql.cursors.
-                                   DictCursor)
+        self.con = pymysql.connect(
+                    host=host,
+                    user=user,
+                    password=password,
+                    db=db,
+                    cursorclass=pymysql.cursors.DictCursor
+                )
         self.cur = self.con.cursor()
 
     def list_employees(self):
-        self.cur.execute("SELECT first_name, last_name, gender FROM employees LIMIT 50")
+        self.cur.execute("SELECT first_name, last_name, gender FROM employees")
         result = self.cur.fetchall()
 
         return result
