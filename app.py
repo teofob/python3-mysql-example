@@ -1,14 +1,18 @@
 from flask import Flask, render_template
 import pymysql
+import configparser
+
+config = configparser.RawConfigParser()
+config.read('/home/ec2-user/.my.cnf')
 
 app = Flask(__name__)
 
 class Database(object):
-    def __init__(self):
-        host = "127.0.0.1"
-        user = "test"
-        password = "password"
-        db = "employees"
+    def __init__(self, config):
+        host = config['client']['host']
+        user = config['client']['user']
+        password = config['client']['password']
+        db = "emp"
 
         self.con = pymysql.connect(
                     host=host,
@@ -29,7 +33,7 @@ class Database(object):
 def employees():
 
     def db_query():
-        db = Database()
+        db = Database(config)
         emps = db.list_employees()
 
         return emps
