@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 import pymysql
 import configparser
+import requests
 
 config = configparser.RawConfigParser()
 config.read('/home/ec2-user/.my.cnf')
@@ -31,7 +32,9 @@ class Database(object):
 
 @app.route('/')
 def main():
-    return "Hi! Go to /emp"
+    a = requests.get('http://169.254.169.254/latest/meta-data/placement/availability-zone').text
+
+    return "Hi! Go to /emp. You are in {}".format(a)
 
 @app.route('/emp')
 def employees():
