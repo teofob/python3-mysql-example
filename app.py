@@ -36,6 +36,24 @@ def main():
 
     return "Hi! Go to /emp. You are in {}".format(a)
 
+
+@app.route('/load')
+def load():
+    from multiprocessing import Pool
+    from multiprocessing import cpu_count
+
+    def f(x):
+        i = 10000
+        for j in xrange(i):
+            x*x*i
+
+    processes = cpu_count()
+    pool = Pool(processes)
+    pool.map(f, range(processes))
+
+    return "loading"
+
+
 @app.route('/emp')
 def employees():
 
