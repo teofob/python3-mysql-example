@@ -47,7 +47,7 @@ def f(x):
     k = 1000
     for I in xrange(i):
         for J in xrange(j):
-            print I, J
+            print(I, J)
             for K in xrange(k):
                 l = x*x
 
