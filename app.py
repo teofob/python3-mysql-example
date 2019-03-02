@@ -30,6 +30,10 @@ class Database(object):
         return result
 
 @app.route('/')
+def main():
+    return "Hi! Go to /emp"
+
+@app.route('/emp')
 def employees():
 
     def db_query():
