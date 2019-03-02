@@ -45,10 +45,10 @@ def f(x):
     i = 1000
     j = 1000
     k = 1000
-    for I in xrange(i):
-        for J in xrange(j):
+    for I in range(i):
+        for J in range(j):
             print(I, J)
-            for K in xrange(k):
+            for K in range(k):
                 l = x*x
 
 @app.route('/load')
