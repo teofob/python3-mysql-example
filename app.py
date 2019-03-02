@@ -2,6 +2,8 @@ from flask import Flask, render_template
 import pymysql
 import configparser
 import requests
+from multiprocessing import Pool
+from multiprocessing import cpu_count
 
 config = configparser.RawConfigParser()
 config.read('/home/ec2-user/.my.cnf')
@@ -32,21 +34,25 @@ class Database(object):
 
 @app.route('/')
 def main():
-    a = requests.get('http://169.254.169.254/latest/meta-data/placement/availability-zone').text
+    try:
+        a = requests.get('http://169.254.169.254/latest/meta-data/placement/availability-zone').text
+    except:
+        a = "NA"
 
     return "Hi! Go to /emp. You are in {}".format(a)
 
+def f(x):
+    i = 1000
+    j = 1000
+    k = 1000
+    for I in xrange(i):
+        for J in xrange(j):
+            print I, J
+            for K in xrange(k):
+                l = x*x
 
 @app.route('/load')
 def load():
-    from multiprocessing import Pool
-    from multiprocessing import cpu_count
-
-    def f(x):
-        i = 10000
-        for j in xrange(i):
-            x*x*i
-
     processes = cpu_count()
     pool = Pool(processes)
     pool.map(f, range(processes))
